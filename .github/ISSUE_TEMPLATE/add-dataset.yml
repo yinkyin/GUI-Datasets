@@ -1,0 +1,63 @@
+name: Add a GUI dataset
+description: Suggest a new dataset for the GUI Datasets Hub catalog
+title: "[Dataset] <name>"
+labels: [dataset, curation]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Dataset name
+      placeholder: WebSight, MobileViews, CMGUI
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Canonical URL
+      description: Prefer Hugging Face, Kaggle, GitHub, project page, paper, or official data registry link.
+      placeholder: https://huggingface.co/datasets/...
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Primary platform
+      options:
+        - Web
+        - Mobile
+        - Cross-platform
+        - Security
+        - Screenshot-to-code
+        - Chinese GUI
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Factual summary
+      description: What is inside the dataset? What task is it best for?
+      placeholder: "A dataset of ... with ... annotations for ..."
+    validations:
+      required: true
+  - type: textarea
+    id: annotations
+    attributes:
+      label: Annotation and modality details
+      placeholder: screenshots, DOM, CSS, view hierarchy, bounding boxes, traces, instructions, QA pairs
+    validations:
+      required: true
+  - type: input
+    id: scale
+    attributes:
+      label: Scale
+      placeholder: 400K rendered pages, 1.2M screenshot-VH pairs, 18K traces
+  - type: input
+    id: license
+    attributes:
+      label: License or access condition
+      placeholder: CC-BY-4.0, research-only, unknown
+  - type: textarea
+    id: caveats
+    attributes:
+      label: Caveats or verification notes
+      description: Mention if access, license, split, or exact sample count still needs verification.

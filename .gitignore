@@ -1,0 +1,15 @@
+# dependencies
+node_modules
+site/node_modules
+
+# build outputs
+dist
+site/dist
+.vite
+site/.vite
+
+# local files
+.DS_Store
+.env
+.env.local
+*.log
