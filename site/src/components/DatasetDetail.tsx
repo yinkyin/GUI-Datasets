@@ -1,9 +1,12 @@
 import { useEffect, useRef } from "react";
-import { ArrowUpRight, Check, CheckCircle2, Globe2, Languages, Plus, ShieldAlert, Star, X } from "lucide-react";
+import { ArrowUpRight, Check, CheckCircle2, Plus, ShieldAlert, Star, X } from "lucide-react";
 import type { GuiDataset } from "@/types/dataset";
 import { getPrimaryUrl } from "@/data/selectors";
+import { localizeDataset } from "@/data/localize";
 import { useIsDark } from "@/hooks/use-theme";
 import { getPlatformColors } from "@/lib/theme";
+import { accessLabel, languageLabel, platformLabel, regionLabel } from "@/i18n/strings";
+import { useLanguage } from "@/i18n/useLanguage";
 import { LinkPill } from "@/components/LinkPill";
 
 export function DatasetDetail({
@@ -19,6 +22,7 @@ export function DatasetDetail({
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const isDark = useIsDark();
+  const { t, lang } = useLanguage();
 
   useEffect(() => {
     if (!dataset) return;
@@ -37,16 +41,17 @@ export function DatasetDetail({
 
   if (!dataset) return null;
   const platformColor = getPlatformColors(isDark)[dataset.platform];
+  const local = localizeDataset(dataset, lang);
 
   const meta = [
-    { label: "Region", value: dataset.region, icon: Globe2 },
-    { label: "Language", value: dataset.language, icon: Languages },
-    { label: "Access", value: dataset.access },
-    { label: "License", value: dataset.license ?? "Verify before use" }
+    { label: t("card.region"), value: regionLabel(dataset.region, lang) },
+    { label: t("card.language"), value: languageLabel(dataset.language, lang) },
+    { label: t("card.access"), value: accessLabel(dataset.access, lang) },
+    { label: t("card.license"), value: dataset.license ?? t("card.licenseFallback") }
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-label={`${dataset.name} details`}>
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-label={dataset.name}>
       <div className="absolute inset-0 animate-fade-in bg-foreground/40 backdrop-blur-sm" onClick={onClose} />
       <div
         ref={panelRef}
@@ -57,20 +62,20 @@ export function DatasetDetail({
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-full px-2.5 py-1 text-xs font-bold text-white" style={{ backgroundColor: platformColor }}>
-                {dataset.platform}
+                {platformLabel(dataset.platform, lang)}
               </span>
-              <div className="flex items-center gap-0.5 text-primary" aria-label={`Importance ${dataset.stars} of 3`}>
+              <div className="flex items-center gap-0.5 text-primary" aria-label={t("card.importance", { n: dataset.stars })}>
                 {Array.from({ length: 3 }).map((_, i) => (
                   <Star key={i} className={`h-3.5 w-3.5 ${i < dataset.stars ? "fill-current" : "opacity-25"}`} />
                 ))}
               </div>
             </div>
             <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-foreground">{dataset.name}</h2>
-            <p className="mt-0.5 text-sm font-medium text-muted-foreground">{dataset.source}</p>
+            <p className="mt-0.5 text-sm font-medium text-muted-foreground">{local.source}</p>
           </div>
           <button
             type="button"
-            aria-label="Close details"
+            aria-label={t("card.close")}
             onClick={onClose}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition hover:text-foreground"
           >
@@ -80,11 +85,11 @@ export function DatasetDetail({
 
         <div className="space-y-6 px-6 py-6">
           <div className="rounded-2xl bg-muted px-4 py-3">
-            <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">Scale</p>
-            <p className="mt-0.5 text-lg font-bold tabular-nums text-foreground">{dataset.scaleLabel}</p>
+            <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">{t("card.scale")}</p>
+            <p className="mt-0.5 text-lg font-bold tabular-nums text-foreground">{local.scaleLabel}</p>
           </div>
 
-          <p className="text-sm leading-7 text-foreground/90">{dataset.summary}</p>
+          <p className="text-sm leading-7 text-foreground/90">{local.summary}</p>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {meta.map((item) => (
@@ -96,9 +101,9 @@ export function DatasetDetail({
           </div>
 
           <div>
-            <p className="font-display text-sm font-bold text-foreground">Best for</p>
+            <p className="font-display text-sm font-bold text-foreground">{t("card.bestFor")}</p>
             <ul className="mt-2 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
-              {dataset.bestFor.map((item) => (
+              {local.bestFor.map((item) => (
                 <li key={item} className="flex gap-2">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
                   {item}
@@ -109,17 +114,17 @@ export function DatasetDetail({
 
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <p className="font-display text-sm font-bold text-foreground">Annotations</p>
+              <p className="font-display text-sm font-bold text-foreground">{t("card.annotations")}</p>
               <div className="mt-2 flex flex-wrap gap-2">
-                {dataset.annotations.map((item) => (
+                {local.annotations.map((item) => (
                   <span key={item} className="rounded-lg bg-muted px-2 py-1 text-xs font-medium text-foreground/80">{item}</span>
                 ))}
               </div>
             </div>
             <div>
-              <p className="font-display text-sm font-bold text-foreground">Modalities</p>
+              <p className="font-display text-sm font-bold text-foreground">{t("card.modalities")}</p>
               <div className="mt-2 flex flex-wrap gap-2">
-                {dataset.modalities.map((item) => (
+                {local.modalities.map((item) => (
                   <span key={item} className="rounded-lg bg-muted px-2 py-1 text-xs font-medium text-foreground/80">{item}</span>
                 ))}
               </div>
@@ -129,20 +134,20 @@ export function DatasetDetail({
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-success/25 bg-success/10 p-4">
               <p className="flex items-center gap-1.5 font-display text-sm font-bold text-foreground">
-                <CheckCircle2 className="h-4 w-4 text-success" /> Strengths
+                <CheckCircle2 className="h-4 w-4 text-success" /> {t("card.strengths")}
               </p>
               <ul className="mt-2 space-y-1.5 text-sm text-foreground/80">
-                {dataset.strengths.map((item) => (
+                {local.strengths.map((item) => (
                   <li key={item}>• {item}</li>
                 ))}
               </ul>
             </div>
             <div className="rounded-2xl border border-accent/25 bg-accent/10 p-4">
               <p className="flex items-center gap-1.5 font-display text-sm font-bold text-foreground">
-                <ShieldAlert className="h-4 w-4 text-accent" /> Watch-outs
+                <ShieldAlert className="h-4 w-4 text-accent" /> {t("card.watchouts")}
               </p>
               <ul className="mt-2 space-y-1.5 text-sm text-foreground/80">
-                {dataset.caveats.map((item) => (
+                {local.caveats.map((item) => (
                   <li key={item}>• {item}</li>
                 ))}
               </ul>
@@ -163,7 +168,7 @@ export function DatasetDetail({
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground transition hover:opacity-90"
           >
-            Open dataset <ArrowUpRight className="h-4 w-4" />
+            {t("card.openDataset")} <ArrowUpRight className="h-4 w-4" />
           </a>
           <button
             type="button"
@@ -176,7 +181,7 @@ export function DatasetDetail({
             }`}
           >
             {compared ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-            {compared ? "In comparison" : "Add to compare"}
+            {compared ? t("card.inCompare") : t("card.addCompare")}
           </button>
         </div>
       </div>

@@ -39,12 +39,3 @@ export function getChartNeutrals(isDark: boolean) {
     grid: isDark ? "rgba(163,158,151,0.18)" : "rgba(28,28,30,0.10)"
   };
 }
-
-export const platformLabels: Record<Platform, string> = {
-  Web: "Web",
-  Mobile: "Mobile",
-  "Cross-platform": "Cross-platform",
-  Security: "Security",
-  "Screenshot-to-code": "Screenshot-to-code",
-  "Chinese GUI": "Chinese GUI"
-};

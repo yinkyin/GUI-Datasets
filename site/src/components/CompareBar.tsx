@@ -1,5 +1,6 @@
 import { GitCompare, X } from "lucide-react";
 import type { GuiDataset } from "@/types/dataset";
+import { useLanguage } from "@/i18n/useLanguage";
 
 export function CompareBar({
   selected,
@@ -12,6 +13,7 @@ export function CompareBar({
   onClear: () => void;
   onView: () => void;
 }) {
+  const { t } = useLanguage();
   if (selected.length === 0) return null;
 
   return (
@@ -20,7 +22,7 @@ export function CompareBar({
         <div className="flex items-center gap-2 text-sm font-semibold">
           <GitCompare className="h-4 w-4 text-primary" />
           <span className="tabular-nums">{selected.length}/4</span>
-          <span className="hidden sm:inline">selected</span>
+          <span className="hidden sm:inline">{t("compare.selected")}</span>
         </div>
         <div className="flex min-w-0 flex-1 flex-wrap gap-1.5">
           {selected.map((dataset) => (
@@ -41,14 +43,14 @@ export function CompareBar({
             onClick={onClear}
             className="rounded-full px-3 py-1.5 text-xs font-semibold text-secondary-foreground/70 transition hover:text-secondary-foreground"
           >
-            Clear
+            {t("compare.clear")}
           </button>
           <button
             type="button"
             onClick={onView}
             className="rounded-full bg-primary px-4 py-1.5 text-xs font-bold text-primary-foreground transition hover:opacity-90"
           >
-            Compare
+            {t("compare.compare")}
           </button>
         </div>
       </div>

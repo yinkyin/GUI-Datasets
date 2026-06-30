@@ -1,10 +1,13 @@
 import { ArrowUpRight, BarChart3, Sparkles, Zap } from "lucide-react";
 import { useIsDark } from "@/hooks/use-theme";
-import { getPlatformColors, platformLabels } from "@/lib/theme";
+import { getPlatformColors } from "@/lib/theme";
+import { platformLabel } from "@/i18n/strings";
+import { useLanguage } from "@/i18n/useLanguage";
 import { platformDistribution } from "@/data/selectors";
 
 export function Hero({ count }: { count: number }) {
   const isDark = useIsDark();
+  const { t, lang } = useLanguage();
   const colors = getPlatformColors(isDark);
   const distribution = platformDistribution();
   const max = Math.max(...distribution.map((d) => d.value), 1);
@@ -15,26 +18,26 @@ export function Hero({ count }: { count: number }) {
         <div className="animate-slide-up">
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-2 text-sm font-semibold text-foreground shadow-xs">
             <Sparkles className="h-4 w-4 text-primary" />
-            A public map of GUI data for agents, grounding, VQA & screenshot-to-code
+            {t("hero.badge")}
           </div>
           <h1 className="mt-6 max-w-4xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            Turn a dataset list into a research-grade GUI data platform.
+            {t("hero.title")}
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-            Explore GUI datasets by platform, annotation, task, region and access channel. The goal is not only to list links, but to help researchers decide what to use, how to combine it, and where the gaps are.
+            {t("hero.subtitle")}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#catalog"
               className="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground shadow-soft transition hover:-translate-y-0.5 hover:shadow-soft-lg"
             >
-              Browse catalog <ArrowUpRight className="h-4 w-4" />
+              {t("hero.cta.browse")} <ArrowUpRight className="h-4 w-4" />
             </a>
             <a
               href="#classifier"
               className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-bold text-foreground transition hover:border-foreground/30 hover:bg-muted"
             >
-              Test auto classification <Zap className="h-4 w-4 text-primary" />
+              {t("hero.cta.classify")} <Zap className="h-4 w-4 text-primary" />
             </a>
           </div>
         </div>
@@ -43,8 +46,10 @@ export function Hero({ count }: { count: number }) {
           <div className="rounded-3xl bg-secondary p-5 text-secondary-foreground">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-semibold text-primary">Live catalog snapshot</p>
-                <p className="font-display text-3xl font-extrabold tabular-nums">{count} datasets</p>
+                <p className="text-sm font-semibold text-primary">{t("hero.snapshot")}</p>
+                <p className="font-display text-3xl font-extrabold tabular-nums">
+                  {count} {t("hero.datasets")}
+                </p>
               </div>
               <div className="rounded-2xl bg-secondary-foreground/10 p-2.5">
                 <BarChart3 className="h-7 w-7 text-primary" />
@@ -54,7 +59,7 @@ export function Hero({ count }: { count: number }) {
               {distribution.map((item) => (
                 <div key={item.name}>
                   <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="text-secondary-foreground/85">{platformLabels[item.platform]}</span>
+                    <span className="text-secondary-foreground/85">{platformLabel(item.platform, lang)}</span>
                     <span className="font-bold tabular-nums">{item.value}</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-secondary-foreground/10">

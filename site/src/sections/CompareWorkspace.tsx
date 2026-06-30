@@ -1,8 +1,10 @@
 import { GitBranch, X } from "lucide-react";
 import type { GuiDataset } from "@/types/dataset";
 import { ComparePanel } from "@/components/ComparePanel";
+import { useLanguage } from "@/i18n/useLanguage";
 
 export function CompareWorkspace({ selected, onRemove }: { selected: GuiDataset[]; onRemove: (id: string) => void }) {
+  const { t } = useLanguage();
   return (
     <section id="compare" className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[0.75fr_1.25fr]">
@@ -10,13 +12,11 @@ export function CompareWorkspace({ selected, onRemove }: { selected: GuiDataset[
           <div className="rounded-2xl bg-secondary-foreground/10 p-2.5 w-fit">
             <GitBranch className="h-7 w-7 text-primary" />
           </div>
-          <h2 className="mt-4 font-display text-3xl font-bold">Comparison workspace</h2>
-          <p className="mt-3 text-sm leading-6 text-secondary-foreground/80">
-            Keep this as a decision aid: compare scale, labels and caveats before choosing a training mix or benchmark suite.
-          </p>
+          <h2 className="mt-4 font-display text-3xl font-bold">{t("compare.title")}</h2>
+          <p className="mt-3 text-sm leading-6 text-secondary-foreground/80">{t("compare.desc")}</p>
           <div className="mt-5 flex flex-wrap gap-2">
             {selected.length === 0 ? (
-              <p className="text-sm text-secondary-foreground/60">Add datasets from the catalog to start comparing.</p>
+              <p className="text-sm text-secondary-foreground/60">{t("compare.emptyHint")}</p>
             ) : (
               selected.map((dataset) => (
                 <button

@@ -44,6 +44,20 @@ export interface GuiDataset {
   links: DatasetLink[];
 }
 
+/** Optional Chinese display mirror for a dataset (keyed by id). English remains the filter key. */
+export interface DatasetZh {
+  summary?: string;
+  scaleLabel?: string;
+  source?: string;
+  bestFor?: string[];
+  tasks?: string[];
+  surfaces?: string[];
+  annotations?: string[];
+  modalities?: string[];
+  strengths?: string[];
+  caveats?: string[];
+}
+
 export interface ClassifierResult {
   platform: Platform;
   access: AccessType;

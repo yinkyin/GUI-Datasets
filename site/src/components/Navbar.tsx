@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { Database, Github, Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLanguage } from "@/i18n/useLanguage";
 
 const links = [
-  { id: "catalog", label: "Catalog" },
-  { id: "overview", label: "Overview" },
-  { id: "classifier", label: "Auto classify" },
-  { id: "roadmap", label: "Use cases" }
+  { id: "catalog", key: "nav.catalog" },
+  { id: "overview", key: "nav.overview" },
+  { id: "classifier", key: "nav.classifier" },
+  { id: "roadmap", key: "nav.roadmap" }
 ];
 
 export function Navbar() {
+  const { t } = useLanguage();
   const [active, setActive] = useState("top");
   const [open, setOpen] = useState(false);
 
@@ -38,8 +41,8 @@ export function Navbar() {
             <Database className="h-5 w-5" />
           </div>
           <div className="leading-tight">
-            <p className="font-display text-sm font-bold tracking-tight text-foreground">GUI Datasets</p>
-            <p className="text-xs font-medium text-muted-foreground">curated research portal</p>
+            <p className="font-display text-sm font-bold tracking-tight text-foreground">{t("nav.brand")}</p>
+            <p className="text-xs font-medium text-muted-foreground">{t("nav.tagline")}</p>
           </div>
         </a>
 
@@ -54,7 +57,7 @@ export function Navbar() {
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
-              {link.label}
+              {t(link.key)}
             </a>
           ))}
           <a
@@ -63,18 +66,20 @@ export function Navbar() {
             rel="noreferrer"
             className="ml-1 flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            <Github className="h-4 w-4" /> GitHub
+            <Github className="h-4 w-4" /> {t("nav.github")}
           </a>
-          <div className="ml-1">
+          <div className="ml-1 flex items-center gap-1.5">
+            <LanguageToggle />
             <ThemeToggle />
           </div>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <LanguageToggle />
           <ThemeToggle />
           <button
             type="button"
-            aria-label="Toggle navigation menu"
+            aria-label={t("nav.menu")}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
             className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground"
@@ -96,7 +101,7 @@ export function Navbar() {
                   active === link.id ? "bg-secondary text-secondary-foreground" : "text-foreground hover:bg-muted"
                 }`}
               >
-                {link.label}
+                {t(link.key)}
               </a>
             ))}
             <a
@@ -106,7 +111,7 @@ export function Navbar() {
               onClick={() => setOpen(false)}
               className="flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-foreground hover:bg-muted"
             >
-              <Github className="h-4 w-4" /> GitHub
+              <Github className="h-4 w-4" /> {t("nav.github")}
             </a>
           </div>
         </div>
