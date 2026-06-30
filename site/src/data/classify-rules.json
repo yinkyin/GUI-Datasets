@@ -1,0 +1,28 @@
+{
+  "platformRules": [
+    { "platform": "Chinese GUI", "terms": ["chinese", "中文", "china", "alibaba", "ant", "openbmb", "modelscope", "mini-program", "wechat", "taobao", "douyin"] },
+    { "platform": "Security", "terms": ["phish", "security", "brand", "url", "fraud", "malware", "credential"] },
+    { "platform": "Screenshot-to-code", "terms": ["screenshot-to-code", "design-to-code", "html", "css", "dsl", "code generation", "tailwind"] },
+    { "platform": "Cross-platform", "terms": ["cross-platform", "desktop", "macos", "windows", "ios", "grounding", "screenspot", "groundui"] },
+    { "platform": "Mobile", "terms": ["android", "mobile", "app", "view hierarchy", "rico", "vh", "ios"] },
+    { "platform": "Web", "terms": ["web", "website", "dom", "browser", "page", "html"] }
+  ],
+  "taskRules": [
+    { "label": "Screenshot-to-code", "terms": ["code", "html", "css", "dsl", "design-to-code", "screenshot-to-code"] },
+    { "label": "Grounding", "terms": ["ground", "bbox", "box", "coordinate", "element", "click", "target"] },
+    { "label": "Agent training", "terms": ["agent", "trace", "trajectory", "instruction", "navigation", "operation"] },
+    { "label": "Object detection", "terms": ["yolo", "coco", "voc", "detect", "bbox", "bounding"] },
+    { "label": "Question answering", "terms": ["qa", "question", "answer", "vqa"] },
+    { "label": "Security classification", "terms": ["phish", "fraud", "security", "brand"] },
+    { "label": "Retrieval", "terms": ["retrieval", "search", "metadata", "category"] }
+  ],
+  "annotationRules": [
+    { "label": "bounding boxes", "terms": ["bbox", "box", "coordinate", "yolo", "coco", "voc"] },
+    { "label": "view hierarchy", "terms": ["view hierarchy", "vh", "android tree", "hierarchy"] },
+    { "label": "DOM/CSS", "terms": ["dom", "css", "html", "browser"] },
+    { "label": "operation traces", "terms": ["trace", "trajectory", "operation", "action", "navigation"] },
+    { "label": "instructions", "terms": ["instruction", "intent", "task", "command"] },
+    { "label": "metadata", "terms": ["metadata", "category", "domain", "description"] },
+    { "label": "QA pairs", "terms": ["qa", "question", "answer"] }
+  ]
+}

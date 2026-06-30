@@ -1,36 +1,18 @@
 #!/usr/bin/env node
 
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const rules = JSON.parse(readFileSync(resolve(__dirname, "../site/src/data/classify-rules.json"), "utf8"));
+
+const platforms = rules.platformRules.map((r) => [r.platform, r.terms]);
+const tasks = rules.taskRules.map((r) => [r.label, r.terms]);
+const annotations = rules.annotationRules.map((r) => [r.label, r.terms]);
+
 const [, , url = "", ...rest] = process.argv;
 const text = `${url} ${rest.join(" ")}`.toLowerCase();
-
-const platforms = [
-  ["Chinese GUI", ["chinese", "中文", "china", "alibaba", "ant", "openbmb", "modelscope", "mini-program", "wechat", "taobao", "douyin"]],
-  ["Security", ["phish", "security", "brand", "url", "fraud", "malware", "credential"]],
-  ["Screenshot-to-code", ["screenshot-to-code", "design-to-code", "html", "css", "dsl", "code generation", "tailwind"]],
-  ["Cross-platform", ["cross-platform", "desktop", "macos", "windows", "ios", "grounding", "screenspot", "groundui"]],
-  ["Mobile", ["android", "mobile", "app", "view hierarchy", "rico", "vh", "ios"]],
-  ["Web", ["web", "website", "dom", "browser", "page", "html"]]
-];
-
-const tasks = [
-  ["Screenshot-to-code", ["code", "html", "css", "dsl", "design-to-code", "screenshot-to-code"]],
-  ["Grounding", ["ground", "bbox", "box", "coordinate", "element", "click", "target"]],
-  ["Agent training", ["agent", "trace", "trajectory", "instruction", "navigation", "operation"]],
-  ["Object detection", ["yolo", "coco", "voc", "detect", "bbox", "bounding"]],
-  ["Question answering", ["qa", "question", "answer", "vqa"]],
-  ["Security classification", ["phish", "fraud", "security", "brand"]],
-  ["Retrieval", ["retrieval", "search", "metadata", "category"]]
-];
-
-const annotations = [
-  ["bounding boxes", ["bbox", "box", "coordinate", "yolo", "coco", "voc"]],
-  ["view hierarchy", ["view hierarchy", "vh", "android tree", "hierarchy"]],
-  ["DOM/CSS", ["dom", "css", "html", "browser"]],
-  ["operation traces", ["trace", "trajectory", "operation", "action", "navigation"]],
-  ["instructions", ["instruction", "intent", "task", "command"]],
-  ["metadata", ["metadata", "category", "domain", "description"]],
-  ["QA pairs", ["qa", "question", "answer"]]
-];
 
 function score(terms) {
   return terms.reduce((sum, term) => sum + (text.includes(term) ? 1 : 0), 0);
