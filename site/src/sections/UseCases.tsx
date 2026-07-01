@@ -13,11 +13,11 @@ export function UseCases() {
             <BookOpen className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-accent">{t("usecases.kicker")}</p>
-            <h2 className="font-display text-3xl font-bold text-foreground">{t("usecases.title")}</h2>
+            <p className={`text-sm font-bold text-accent ${lang === "zh" ? "tracking-normal" : "uppercase tracking-[0.18em]"}`}>{t("usecases.kicker")}</p>
+            <h2 className="text-balance font-display text-3xl font-bold text-foreground">{t("usecases.title")}</h2>
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {strategicUseCases.map((item) => {
             const zh = lang === "zh" ? strategicUseCasesZh[item.label] : undefined;
             return (
@@ -28,7 +28,7 @@ export function UseCases() {
                     <span key={dataset} className="rounded-full bg-card px-2.5 py-1 text-xs font-bold text-foreground shadow-xs">{dataset}</span>
                   ))}
                 </div>
-                <p className="mt-4 text-sm leading-6 text-muted-foreground">{zh?.note ?? item.note}</p>
+                <p className={`mt-4 text-sm text-muted-foreground ${lang === "zh" ? "leading-7" : "leading-6"}`}>{zh?.note ?? item.note}</p>
               </div>
             );
           })}

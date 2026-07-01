@@ -70,11 +70,27 @@ main > header {
   box-shadow: 0 0 0 4px hsl(var(--ring) / 0.25);
 }
 
-.line-clamp-3 {
+.line-clamp-3,
+.line-clamp-4 {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.line-clamp-3 {
+  -webkit-line-clamp: 3;
+}
+
+.line-clamp-4 {
+  -webkit-line-clamp: 4;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
 }
 
 .recharts-tooltip-wrapper .recharts-default-tooltip {

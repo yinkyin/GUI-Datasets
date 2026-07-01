@@ -17,7 +17,7 @@ export function ComparePanel({ selected }: { selected: GuiDataset[] }) {
     <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-border text-left text-sm">
-          <thead className="bg-muted text-xs uppercase tracking-wider text-muted-foreground">
+          <thead className={`bg-muted text-xs text-muted-foreground ${lang === "zh" ? "" : "uppercase tracking-wider"}`}>
             <tr>
               <th className="px-4 py-3 font-bold">{t("compare.col.dataset")}</th>
               <th className="px-4 py-3 font-bold">{t("compare.col.scale")}</th>
@@ -26,7 +26,7 @@ export function ComparePanel({ selected }: { selected: GuiDataset[] }) {
               <th className="px-4 py-3 font-bold">{t("compare.col.risk")}</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border/70">
+          <tbody className={`divide-y divide-border/70 ${lang === "zh" ? "leading-6" : ""}`}>
             {selected.map((dataset) => {
               const local = localizeDataset(dataset, lang);
               return (

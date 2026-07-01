@@ -1,37 +1,42 @@
 import type { DatasetZh } from "@/types/dataset";
 
 /**
- * Chinese display mirrors keyed by dataset id. Proper nouns (Hugging Face, Rico,
- * WebSight, YOLO, DOM, CSS, HTML, etc.) intentionally stay in English. Term
- * conventions: grounding→定位, agent→智能体, screenshot-to-code→截图转代码,
+ * Chinese display mirrors keyed by dataset id. English canonical fields remain
+ * the source of truth: dataset names, short names, people, projects, platforms,
+ * labs, conferences, and technical acronyms intentionally stay in their official
+ * form. Use Chinese here for explanatory fields, not as a literal translation
+ * layer. Institution/source strings should prefer paper/project-page names or
+ * widely recognized abbreviations over forced Chinese translations.
+ *
+ * Term conventions: grounding→定位, agent→智能体, screenshot-to-code→截图转代码,
  * view hierarchy→视图层级, trace→操作轨迹, annotation→标注, benchmark→基准.
  */
 export const datasetsZh: Record<string, DatasetZh> = {
   websight: {
     summary:
-      "合成网页截图与 Tailwind 风格 HTML/CSS 配对，适合让模型学习从视觉到代码的对齐，而不仅是视觉识别。",
+      "把网页截图和 Tailwind 风格的 HTML/CSS 成对提供，适合训练模型从画面还原结构与代码，而不只是识别界面元素。",
     scaleLabel: "200 万对 HTML/CSS 截图配对",
-    source: "HuggingFace M4 团队",
+    source: "Hugging Face M4 team",
     bestFor: ["截图转代码", "UI 代码生成", "布局重建"],
     tasks: ["截图转代码", "布局生成"],
     surfaces: ["桌面网页"],
     annotations: ["HTML", "CSS", "截图配对"],
     modalities: ["截图", "代码"],
-    strengths: ["规模大", "配对监督清晰", "许可宽松"],
-    caveats: ["合成分布", "主要为英文网页"]
+    strengths: ["规模足够大", "截图-代码配对明确", "许可相对友好"],
+    caveats: ["合成网页分布", "英文网页占比较高"]
   },
   "common-screens": {
     summary:
-      "覆盖多领域、多类别与多视口风格的超大网页截图语料并带元数据，最适合作为网页 UI 表征学习的规模锚点。",
+      "超大规模网页截图语料，覆盖不同领域、类别和视口，并附带元数据；适合作为网页 UI 表征学习和预训练的数据底座。",
     scaleLabel: "7000 万+ 网页截图",
-    source: "AWS 开放数据注册库",
+    source: "AWS Registry of Open Data",
     bestFor: ["大规模网页分析", "网站分类", "预训练"],
     tasks: ["分类", "表征学习", "网页分析"],
     surfaces: ["桌面网页", "移动网页", "整页网页"],
     annotations: ["元数据", "域名", "类别"],
     modalities: ["截图", "元数据"],
-    strengths: ["覆盖海量", "网站多样", "适合作基础数据集"],
-    caveats: ["以元数据为主，缺细粒度 UI 标注", "存储与采样策略很关键"]
+    strengths: ["覆盖量极大", "网站类型多样", "适合作预训练底座"],
+    caveats: ["以元数据为主，缺少细粒度 UI 标注", "需要先设计采样与存储策略"]
   },
   webui: {
     summary: "带 DOM 级语义、包围框与 CSS 属性的真实渲染网页，将视觉截图与浏览器结构连接起来。",
@@ -110,7 +115,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
     summary:
       "现代大规模移动数据集，将数万款应用的截图与视图层级、操作轨迹配对，包含大量中文应用 UI。",
     scaleLabel: "120 万+ 截图-视图层级配对",
-    source: "BUPT / CASIA / 清华 AIR",
+    source: "BUPT / CASIA / Tsinghua AIR",
     bestFor: ["移动智能体训练", "大规模截图理解", "视图层级建模"],
     tasks: ["智能体训练", "UI 分析", "表征学习"],
     surfaces: ["Android"],
@@ -134,7 +139,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
   ui5k: {
     summary: "带类别元数据的中等规模 Android UI 截图集合，适合 UI 检索与设计搜索。",
     scaleLabel: "54987 个 Android 屏幕",
-    source: "学术研究",
+    source: "Academic research",
     bestFor: ["UI 检索", "设计搜索", "类别分析"],
     tasks: ["检索", "分类"],
     surfaces: ["Android"],
@@ -146,7 +151,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
   enrico: {
     summary: "从 Rico 中人工标注移动设计主题类别的精选高质量子集，适合标注质量比规模更重要的场景。",
     scaleLabel: "1460 个精选屏幕",
-    source: "阿尔托大学 / MobileHCI 2020",
+    source: "Aalto University / MobileHCI 2020",
     bestFor: ["UI 主题建模", "设计分类", "少样本评测"],
     tasks: ["主题分类", "设计检索"],
     surfaces: ["Android"],
@@ -218,7 +223,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
   "screenspot-series": {
     summary: "跨平台 GUI 定位基准，覆盖 iOS、Android、macOS 与网页，并有 v2 与 Pro 变体用于更难的评测。",
     scaleLabel: "600+ 截图、1.2K 指令及多个变体",
-    source: "南京大学 / 上海 AI Lab",
+    source: "NJU / Shanghai AI Lab",
     bestFor: ["GUI 定位", "跨平台评测", "高分辨率基准"],
     tasks: ["定位", "基准评测"],
     surfaces: ["iOS", "Android", "macOS", "网页"],
@@ -292,7 +297,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
     summary:
       "经人工核验的中文移动 GUI 智能体数据集，含精确包围框、中文操作指令与覆盖主流真实应用的触控轨迹。",
     scaleLabel: "1.8 万条轨迹与 9.8 万单步屏幕",
-    source: "阿里巴巴 / MobiZen-GUI / SecAgent",
+    source: "Alibaba / MobiZen-GUI / SecAgent",
     bestFor: ["中文应用智能体训练", "操作轨迹学习", "可定位的移动动作"],
     tasks: ["智能体训练", "定位", "轨迹建模"],
     surfaces: ["中文 Android 应用", "电商", "社交", "本地生活", "出行"],
@@ -304,7 +309,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
   "e-ant": {
     summary: "来自真实用户行为、覆盖小程序与网址的中文 GUI 导航数据集，聚焦从意图到动作的导航。",
     scaleLabel: "4 万条真实用户操作轨迹",
-    source: "蚂蚁集团",
+    source: "Ant Group",
     bestFor: ["中文小程序导航", "真实行为建模", "意图跟随"],
     tasks: ["导航", "智能体训练", "意图跟随"],
     surfaces: ["小程序", "移动网页", "中文应用"],
@@ -316,7 +321,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
   cagui: {
     summary: "双语中文 Android GUI 基准与预训练数据集，覆盖主流应用，带定位标注与多步智能体轨迹。",
     scaleLabel: "30+ 主流中文应用",
-    source: "OpenBMB / 清华 THUNLP",
+    source: "OpenBMB / Tsinghua THUNLP",
     bestFor: ["中文 Android 智能体", "双语定位", "多步任务轨迹"],
     tasks: ["定位", "智能体训练", "基准评测"],
     surfaces: ["中文 Android 应用"],
@@ -328,7 +333,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
   "mogui-mocon": {
     summary: "从 Rico 抽取的中文移动 GUI 多模态对话与元素标注数据，把移动 UI 研究拓展到中文对话场景。",
     scaleLabel: "1 万+ 移动屏幕",
-    source: "OpenDFM / 中科院等",
+    source: "OpenDFM / CAS et al.",
     bestFor: ["中文 GUI 对话", "元素标注", "多模态 UI 对话"],
     tasks: ["对话", "元素标注", "定位"],
     surfaces: ["移动端"],
@@ -341,7 +346,7 @@ export const datasetsZh: Record<string, DatasetZh> = {
     summary:
       "使用 Common Crawl 真实网页设计截图并带布局信息的设计转代码数据集，包含中文网页截图。",
     scaleLabel: "2 万个网页设计样本",
-    source: "华中科技大学 / 北京大学 / 重庆大学",
+    source: "HUST / Peking University / Chongqing University",
     bestFor: ["中文网页设计转代码", "布局重建", "网页截图转代码"],
     tasks: ["截图转代码", "布局生成"],
     surfaces: ["网页"],
@@ -356,22 +361,22 @@ export const datasetsZh: Record<string, DatasetZh> = {
 export const strategicUseCasesZh: Record<string, { label: string; note: string }> = {
   "Screenshot to Code": {
     label: "截图转代码",
-    note: "先用 WebSight 打规模，再用 Vision2UI 补中文网页设计，pix2code 留作历史基线。"
+    note: "用 WebSight 提供大规模截图-代码配对，再用 Vision2UI 补充真实中文网页设计，pix2code 更适合作历史基线。"
   },
   "Web Element Detection": {
     label: "网页元素检测",
-    note: "把 DOM/CSS 语义与可直接训练的包围框结合，同时覆盖浏览器结构与视觉组件。"
+    note: "组合 DOM/CSS 语义和可直接训练的包围框，让模型同时看到浏览器结构与视觉组件。"
   },
   "Mobile Agent Training": {
     label: "移动智能体训练",
-    note: "用 MobileViews 打规模，AMEX 提供多层级指令标注，CMGUI 提供中文轨迹监督。"
+    note: "MobileViews 负责规模覆盖，AMEX 提供多层级指令标注，CMGUI 补上真实中文应用的轨迹监督。"
   },
   "GUI Grounding Evaluation": {
     label: "GUI 定位评测",
-    note: "把跨平台截图与中文应用任务混合，避免过拟合到单一 UI 界面。"
+    note: "组合跨平台截图和中文应用任务，降低评测只适配单一 UI 风格的风险。"
   },
   "Security and Phishing": {
     label: "安全与钓鱼检测",
-    note: "从视觉演示走向生产级安全模型时，优先选择 URL/HTML/截图的多模态监督。"
+    note: "如果目标从视觉演示走向安全模型，优先选择同时包含 URL、HTML 与截图的多模态监督。"
   }
 };

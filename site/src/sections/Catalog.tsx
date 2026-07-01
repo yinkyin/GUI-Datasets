@@ -85,12 +85,20 @@ export function Catalog({
     <section id="catalog" className="mx-auto mt-12 max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
       <div className="mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-accent">{t("catalog.kicker")}</p>
-          <h2 className="mt-2 font-display text-4xl font-extrabold tracking-tight text-foreground">{t("catalog.title")}</h2>
+          <p className={`text-sm font-bold text-accent ${lang === "zh" ? "tracking-normal" : "uppercase tracking-[0.18em]"}`}>{t("catalog.kicker")}</p>
+          <h2 className="mt-2 text-balance font-display text-4xl font-extrabold tracking-tight text-foreground">{t("catalog.title")}</h2>
         </div>
         <div className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-muted-foreground">
           <Filter className="h-4 w-4" />
-          <span className="tabular-nums">{results.length}</span> {t("catalog.shownOf")} <span className="tabular-nums">{total}</span> {t("catalog.shown")}
+          {lang === "zh" ? (
+            <span>
+              {t("catalog.shown")} <span className="tabular-nums">{results.length}</span> / <span className="tabular-nums">{total}</span>
+            </span>
+          ) : (
+            <span>
+              <span className="tabular-nums">{results.length}</span> {t("catalog.shownOf")} <span className="tabular-nums">{total}</span> {t("catalog.shown")}
+            </span>
+          )}
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import { datasets, platformOrder } from "@/data/datasets";
+import { datasetsZh } from "@/data/datasets.zh";
 import type { GuiDataset, Platform } from "@/types/dataset";
 
 const numberFormatter = new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 });
@@ -80,6 +81,7 @@ export function filterAndSort(state: FilterState) {
     .filter((dataset) => state.region === "All" || dataset.region === state.region)
     .filter((dataset) => {
       if (!q) return true;
+      const zh = datasetsZh[dataset.id];
       const haystack = [
         dataset.name,
         dataset.shortName,
@@ -89,8 +91,18 @@ export function filterAndSort(state: FilterState) {
         dataset.access,
         ...dataset.tasks,
         ...dataset.annotations,
-        ...dataset.bestFor
+        ...dataset.bestFor,
+        zh?.source,
+        zh?.summary,
+        ...(zh?.tasks ?? []),
+        ...(zh?.annotations ?? []),
+        ...(zh?.bestFor ?? []),
+        ...(zh?.surfaces ?? []),
+        ...(zh?.modalities ?? []),
+        ...(zh?.strengths ?? []),
+        ...(zh?.caveats ?? [])
       ]
+        .filter(Boolean)
         .join(" ")
         .toLowerCase();
       return haystack.includes(q);

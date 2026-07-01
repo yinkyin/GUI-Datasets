@@ -30,7 +30,7 @@ export function Overview() {
         <div className="rounded-3xl border border-border bg-secondary p-6 text-secondary-foreground shadow-soft">
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">{t("overview.coverage")}</p>
+              <p className={`text-sm font-bold text-primary ${lang === "zh" ? "tracking-normal" : "uppercase tracking-[0.18em]"}`}>{t("overview.coverage")}</p>
               <h2 className="mt-1 font-display text-2xl font-bold">{t("overview.coverageTitle")}</h2>
             </div>
             <PieIcon className="h-6 w-6 text-primary" />
@@ -60,7 +60,7 @@ export function Overview() {
         <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-accent">{t("overview.taskMap")}</p>
+              <p className={`text-sm font-bold text-accent ${lang === "zh" ? "tracking-normal" : "uppercase tracking-[0.18em]"}`}>{t("overview.taskMap")}</p>
               <h2 className="mt-1 font-display text-2xl font-bold text-foreground">{t("overview.taskTitle")}</h2>
             </div>
             <Tags className="h-6 w-6 text-accent" />
@@ -70,7 +70,7 @@ export function Overview() {
               <BarChart data={tasks} layout="vertical" margin={{ left: 18, right: 16, top: 4, bottom: 4 }}>
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke={neutrals.grid} />
                 <XAxis type="number" allowDecimals={false} stroke={neutrals.axis} tick={{ fontSize: 12, fill: neutrals.axis }} />
-                <YAxis dataKey="name" type="category" width={124} tick={{ fontSize: 12, fill: neutrals.axis }} stroke={neutrals.axis} />
+                <YAxis dataKey="name" type="category" width={lang === "zh" ? 92 : 124} tick={{ fontSize: 12, fill: neutrals.axis }} stroke={neutrals.axis} />
                 <Tooltip cursor={{ fill: neutrals.grid }} />
                 <Bar dataKey="value" fill={accent} radius={[0, 8, 8, 0]} />
               </BarChart>

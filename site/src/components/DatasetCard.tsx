@@ -73,7 +73,9 @@ export function DatasetCard({
         )}
       </div>
 
-      <p className="mt-4 line-clamp-3 text-sm leading-6 text-muted-foreground">{local.summary}</p>
+      <p className={`mt-4 text-sm text-muted-foreground ${lang === "zh" ? "line-clamp-4 leading-7" : "line-clamp-3 leading-6"}`}>
+        {local.summary}
+      </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {dataset.tasks.slice(0, 4).map((task) => (
@@ -103,7 +105,7 @@ export function DatasetCard({
           type="button"
           onClick={onCompare}
           aria-pressed={compared}
-          className={`ml-auto inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition ${
+          className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition sm:ml-auto ${
             compared
               ? "border-primary bg-primary/20 text-foreground"
               : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-primary/10"

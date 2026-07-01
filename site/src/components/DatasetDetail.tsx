@@ -85,16 +85,16 @@ export function DatasetDetail({
 
         <div className="space-y-6 px-6 py-6">
           <div className="rounded-2xl bg-muted px-4 py-3">
-            <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">{t("card.scale")}</p>
+            <p className={`text-[0.68rem] font-bold text-muted-foreground ${lang === "zh" ? "tracking-normal" : "uppercase tracking-[0.18em]"}`}>{t("card.scale")}</p>
             <p className="mt-0.5 text-lg font-bold tabular-nums text-foreground">{local.scaleLabel}</p>
           </div>
 
-          <p className="text-sm leading-7 text-foreground/90">{local.summary}</p>
+          <p className={`text-foreground/90 ${lang === "zh" ? "text-[0.95rem] leading-8" : "text-sm leading-7"}`}>{local.summary}</p>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {meta.map((item) => (
               <div key={item.label} className="rounded-2xl border border-border bg-background/60 p-3">
-                <p className="text-[0.66rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">{item.label}</p>
+                <p className={`text-[0.66rem] font-bold text-muted-foreground ${lang === "zh" ? "tracking-normal" : "uppercase tracking-[0.16em]"}`}>{item.label}</p>
                 <p className="mt-1 text-sm font-semibold text-foreground">{item.value}</p>
               </div>
             ))}
@@ -138,7 +138,10 @@ export function DatasetDetail({
               </p>
               <ul className="mt-2 space-y-1.5 text-sm text-foreground/80">
                 {local.strengths.map((item) => (
-                  <li key={item}>• {item}</li>
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-current opacity-50" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -148,7 +151,10 @@ export function DatasetDetail({
               </p>
               <ul className="mt-2 space-y-1.5 text-sm text-foreground/80">
                 {local.caveats.map((item) => (
-                  <li key={item}>• {item}</li>
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-current opacity-50" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </div>

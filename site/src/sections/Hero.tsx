@@ -20,10 +20,14 @@ export function Hero({ count }: { count: number }) {
             <Sparkles className="h-4 w-4 text-primary" />
             {t("hero.badge")}
           </div>
-          <h1 className="mt-6 max-w-4xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+          <h1
+            className={`mt-6 max-w-4xl text-balance font-display font-extrabold tracking-tight text-foreground ${
+              lang === "zh" ? "text-4xl leading-[1.14] sm:text-5xl lg:text-[3.4rem]" : "text-4xl leading-[1.05] sm:text-5xl lg:text-6xl"
+            }`}
+          >
             {t("hero.title")}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+          <p className={`mt-6 max-w-2xl text-pretty text-lg text-muted-foreground ${lang === "zh" ? "leading-9" : "leading-8"}`}>
             {t("hero.subtitle")}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
